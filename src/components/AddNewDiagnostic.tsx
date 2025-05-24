@@ -16,7 +16,6 @@ type Inputs = {
 };
 
 export const AddNewDiagnostic = ({ onAddNew, onClose }: AddNewDiagnosticProps) => {
-    const [loading, setLoading] = useState(false);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [dateError, setDateError] = useState(false);
@@ -31,9 +30,7 @@ export const AddNewDiagnostic = ({ onAddNew, onClose }: AddNewDiagnosticProps) =
         if (!selectedDate) {
             setDateError(true);
         } else {
-            setLoading(true);
             onAddNew(selectedDate, data.faultType as FaultType, data.severity as Severity);
-            setLoading(false);
             onClose();
         }
     }
@@ -58,7 +55,6 @@ export const AddNewDiagnostic = ({ onAddNew, onClose }: AddNewDiagnosticProps) =
                         type="button"
                         className="w-full text-left text-gray-900 border-b border-gray-300 py-2 flex items-center justify-between"
                         onClick={() => setShowDatePicker((prev) => !prev)}
-                        disabled={loading}
                     >
                         {selectedDate || "Select Date"}
                         <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -83,7 +79,6 @@ export const AddNewDiagnostic = ({ onAddNew, onClose }: AddNewDiagnosticProps) =
                     <div className="flex items-center justify-between border-b border-gray-300 py-2">
                         <select
                             className="w-full bg-transparent text-gray-900 appearance-none focus:outline-none"
-                            disabled={loading}
                             {...register("faultType", { required: true })}
                         >
                             <option value="">Select Fault Type</option>
@@ -104,7 +99,6 @@ export const AddNewDiagnostic = ({ onAddNew, onClose }: AddNewDiagnosticProps) =
                     <div className="flex items-center justify-between border-b border-gray-300 py-2">
                         <select
                             className="w-full bg-transparent text-gray-900 appearance-none focus:outline-none"
-                            disabled={loading}
                             {...register("severity", { required: true })}
                         >
                             <option value="">Select Severity</option>
@@ -127,14 +121,12 @@ export const AddNewDiagnostic = ({ onAddNew, onClose }: AddNewDiagnosticProps) =
                         type="button"
                         className="px-4 py-2 rounded-lg border [border-color:#b1b9c3] text-gray-900"
                         onClick={handleCancel}
-                        disabled={loading}
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
                         className="px-4 py-2 rounded-lg bg-[#7071f3] text-white"
-                        disabled={loading}
                     >
                         Save
                     </button>
