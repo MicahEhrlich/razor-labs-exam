@@ -1,12 +1,12 @@
 
 import './App.css'
-import { Dashboard } from './components/Dashboard'
+import { DashboardLayout } from './components/Layout/DashboardLayout'
 
 function App() {
 
   return (
     <>
-      <Dashboard />
+      <DashboardLayout />
     </>
   )
 }
