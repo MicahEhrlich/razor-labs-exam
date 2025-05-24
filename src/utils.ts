@@ -1,4 +1,4 @@
-import { severityRank, type Diagnostic } from "./types";
+import { severityRank, type Diagnostic, type FaultType, type Severity } from "./types";
 
 export function sortByDate(diagnostics: Diagnostic[], reverse?: boolean): Diagnostic[] {
     if (reverse) {
@@ -24,4 +24,17 @@ export function getEarliestDate(diagnostics: Diagnostic[]): string {
     return diagnostics.reduce((earliest, current) => {
         return new Date(current.date) < new Date(earliest) ? current.date : earliest;
     }, diagnostics[0].date);
+}
+
+// same logic as implemented in the Dashboard component
+export function addNewDiagnostic(diagnostics: Diagnostic[], date: string, faultType: FaultType, severity: Severity) {
+    const newDiagnostic = {
+        id: Date.now(),
+        date,
+        faultType,
+        severity,
+    };
+    const updatedDiagnostics = [...diagnostics, newDiagnostic];
+    const diagnosticsSortedByDateAndSeverity = sortByDateAndSeverity(updatedDiagnostics);
+    return diagnosticsSortedByDateAndSeverity;
 }
